@@ -37,7 +37,6 @@ namespace RobloxApiDumpTool
         public string Default = "";
         public Dictionary<string, string> Metadata = new Dictionary<string, string>();
 
-
         [JsonProperty("Tags")]
         private JArray _
         {
@@ -67,7 +66,10 @@ namespace RobloxApiDumpTool
         [JsonIgnore]
         public Tags Tags = new Tags();
 
+        [JsonIgnore]
         public string Summary => Describe(false);
+
+        [JsonIgnore]
         public string Signature => Describe(true);
 
         public void AddTag(string tag) => Tags.Add(tag);
@@ -75,7 +77,10 @@ namespace RobloxApiDumpTool
 
         public override string ToString() => Summary;
 
+        [JsonIgnore]
         public readonly string DescriptorType;
+
+        [JsonIgnore]
         public readonly TypePriority TypePriority;
 
         private static readonly Dictionary<Type, Descriptor> InitCache = new Dictionary<Type, Descriptor>();

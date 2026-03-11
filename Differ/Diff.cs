@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace RobloxApiDumpTool
 {
@@ -22,14 +23,16 @@ namespace RobloxApiDumpTool
         public DiffType Type;
 
         public string Field = "";
-        public object Context;
+        public object Context = null;
 
+        [JsonIgnore]
         public bool BiasTarget = false;
         public Descriptor Target;
 
         public DiffChangeList From = new DiffChangeList("ChangeFrom", "from");
         public DiffChangeList To = new DiffChangeList("ChangeTo", "  to");
 
+        [JsonIgnore]
         public bool HasParent => (stack > 0);
         public Diff[] Children => children.ToArray();
 

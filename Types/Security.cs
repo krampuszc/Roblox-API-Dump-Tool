@@ -93,7 +93,7 @@ namespace RobloxApiDumpTool
         [JsonConstructor]
         public ReadWriteSecurity(string read, string write)
         {
-            Read = new Security(read, "");
+            Read = new Security(read, read == write ? "🔒" : "🔍");
             Write = new Security(write, "✏️");
         }
 
@@ -103,7 +103,7 @@ namespace RobloxApiDumpTool
 
         public ReadWriteSecurity(SecurityType read, SecurityType? write = null)
         {
-            Read = new Security(read, "");
+            Read = new Security(read, read == write ? "🔒" : "🔍");
             Write = new Security(write ?? read, "✏️");
         }
 

@@ -112,32 +112,31 @@ namespace RobloxApiDumpTool
                     .OrderBy(item => item, StringComparer.Ordinal)
                     .ToArray();
 
-                string read = string.Join(" | ", readElements);
-                string write = string.Join(" | ", writeElements);
+                string read = string.Join(" + ", readElements);
+                string write = string.Join(" + ", writeElements);
 
                 if (read != write)
                 {
                     var strings = new List<string>();
 
                     if (read != "" && write != "")
-                        strings.Add($"{{🛠️🔎{read}}}");
+                        strings.Add($"{{🚧🔎{read}}}");
                     else if (read != "")
-                        strings.Add($"{{🛠️{read}}}");
-
+                        strings.Add($"{{🚧{read}}}");
 
                     if (write != "")
-                        strings.Add($"{{🛠️✏️{write}}}");
+                        strings.Add($"{{🚧✏️{write}}}");
 
                     return string.Join(" ", strings);
                 }
 
                 if (read != "" && write != "")
-                    return $"{{🛠️🔎{read}}}";
+                    return $"{{🚧🔎{read}}}";
 
                 else if (write != "")
-                    return $"{{🛠️✏️{write}}}";
+                    return $"{{🚧✏️{write}}}";
                 else if (read != "")
-                    return $"{{🛠️{read}}}";
+                    return $"{{🚧{read}}}";
 
                 return "";
             }
@@ -147,14 +146,14 @@ namespace RobloxApiDumpTool
                     .OrderBy(item => item, StringComparer.Ordinal)
                     .ToArray();
 
-                return $"{{🛠️{string.Join(" | ", elements)}}}";
+                return $"{{🚧{string.Join(" + ", elements)}}}";
             }
             else
             {
                 if (!displayUndefined)
                     return "";
 
-                return "{🛠️Undefined}";
+                return "{🚧Undefined}";
             }
         }
 

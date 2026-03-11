@@ -33,68 +33,69 @@ namespace RobloxApiDumpTool
         {
             var writeCell = new Action<object, object>((change, prevChange) =>
             {
-                if (change is Parameters)
+                if (change is Parameters parameters)
                 {
-                    var parameters = change as Parameters;
                     parameters.WriteHtml(html, true);
                 }
-                else if (change is LuaType)
+                else if (change is LuaType type)
                 {
                     if (prevChange is Parameters)
                         html.Symbol("-> ");
 
-                    var type = change as LuaType;
                     type.WriteHtml(html);
                 }
-                else if (change is Descriptor)
+                else if (change is Descriptor desc)
                 {
-                    var desc = change as Descriptor;
                     desc.WriteHtml(html);
                 }
                 else
                 {
                     string value;
+                    string tagClass;
 
-                    if (change is Security)
+                    if (change is Security security)
                     {
-                        var security = change as Security;
+                        tagClass = "Security";
+
+                        if (security.Type == SecurityType.None)
+                            tagClass += " darken";
+
                         value = security.Describe(true);
                     }
-                    else if (change is Capabilities)
+                    else if (change is ReadWriteSecurity rwSecurity)
                     {
-                        var capabilities = change as Capabilities;
+                        tagClass = "Security";
+
+                        if (rwSecurity.Merged && rwSecurity.Read.Type == SecurityType.None)
+                            tagClass += " darken";
+
+                        value = rwSecurity.Describe(true);
+                    }
+                    else if (change is Capabilities capabilities)
+                    {
+                        tagClass = "Capabilities";
+
+                        if (capabilities.IsEmpty())
+                            tagClass += " darken";
+
                         value = capabilities.Describe(true);
                     }
                     else
                     {
+                        if (change is ThreadSafety)
+                            tagClass = "ThreadSafety";
+                        else if (change is Serialization)
+                            tagClass = "Serialization";
+                        else
+                            tagClass = change.GetType().Name;
+
                         value = change.ToString();
-                    }
 
-                    string tagClass;
-
-                    if (value.Contains("🧬"))
-                        tagClass = "ThreadSafety";
-                    else if (value.Contains("🔐") || value.Contains("🔓"))
-                        tagClass = "Capabilities";
-                    else if (value.StartsWith("["))
-                        tagClass = "Serialization";
-                    else if (value.StartsWith("{"))
-                        tagClass = "Security";
-                    else if (value.StartsWith("\""))
-                        tagClass = "String";
-                    else
-                        tagClass = change.GetType().Name;
-
-                    if (tagClass == "Security" && value.Contains("None"))
-                        tagClass += " darken";
-
-                    if (tagClass == "Capabilities" && value.Contains("🔓"))
-                        tagClass += " darken";
-
-                    if (tagClass == "String")
-                    {
-                        html.String(value);
-                        return;
+                        if (value.StartsWith("\""))
+                        {
+                            html.String(value);
+                            return;
+                        }
                     }
 
                     html.Span(tagClass, value);

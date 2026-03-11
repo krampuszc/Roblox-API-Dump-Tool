@@ -321,8 +321,8 @@ namespace RobloxApiDumpTool
                                 if (oldMerged && newMerged)
                                 {
                                     // Just compare them as a security change alone.
-                                    var oldSecurity = oldProp.Security.Value;
-                                    var newSecurity = newProp.Security.Value;
+                                    var oldSecurity = oldProp.Security;
+                                    var newSecurity = newProp.Security;
 
                                     Compare(newMember, "security", oldSecurity, newSecurity);
                                 }
@@ -332,11 +332,11 @@ namespace RobloxApiDumpTool
                                     var oldSecurity = oldProp.Security;
                                     var newSecurity = newProp.Security;
 
-                                    string oldRead = oldSecurity.Read.Value,
-                                           newRead = newSecurity.Read.Value;
+                                    var oldRead = oldSecurity.Read;
+                                    var newRead = newSecurity.Read;
 
-                                    string oldWrite = oldSecurity.Write.Value,
-                                           newWrite = newSecurity.Write.Value;
+                                    var oldWrite = oldSecurity.Write;
+                                    var newWrite = newSecurity.Write;
 
                                     Compare(newMember, "read permissions", oldRead, newRead);
                                     Compare(newMember, "write permissions", oldWrite, newWrite);
@@ -354,7 +354,7 @@ namespace RobloxApiDumpTool
                                 var oldFunc = oldMember as FunctionDescriptor;
                                 var newFunc = newMember as FunctionDescriptor;
 
-                                Compare(newMember, "security", oldFunc.Security.Value, newFunc.Security.Value);
+                                Compare(newMember, "security", oldFunc.Security, newFunc.Security);
                                 Compare(newMember, "parameters", oldFunc.Parameters, newFunc.Parameters);
                                 Compare(newMember, "return-type", oldFunc.ReturnType, newFunc.ReturnType);
                             }
@@ -363,7 +363,7 @@ namespace RobloxApiDumpTool
                                 var oldCall = oldMember as CallbackDescriptor;
                                 var newCall = newMember as CallbackDescriptor;
 
-                                Compare(newMember, "security", oldCall.Security.Value, newCall.Security.Value);
+                                Compare(newMember, "security", oldCall.Security, newCall.Security);
                                 Compare(newMember, "parameters", oldCall.Parameters, newCall.Parameters);
                                 Compare(newMember, "expected return-type", oldCall.ReturnType, newCall.ReturnType);
                             }
@@ -372,7 +372,7 @@ namespace RobloxApiDumpTool
                                 var oldEvent = oldMember as EventDescriptor;
                                 var newEvent = newMember as EventDescriptor;
 
-                                Compare(newMember, "security", oldEvent.Security.Value, newEvent.Security.Value);
+                                Compare(newMember, "security", oldEvent.Security, newEvent.Security);
                                 Compare(newMember, "parameters", oldEvent.Parameters, newEvent.Parameters);
                             }
                         }

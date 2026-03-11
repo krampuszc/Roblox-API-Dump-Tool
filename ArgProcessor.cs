@@ -239,7 +239,7 @@ namespace RobloxApiDumpTool
                 string currentPath = null;
                 string prevPath = null;
 
-                StudioDeployLogs logs = await StudioDeployLogs.Get(LIVE);
+                StudioDeployLogs logs = await StudioDeployLogs.Get(LIVE, true);
                 DeployLog currentLog = null;
                 DeployLog prevLog = null;
 
